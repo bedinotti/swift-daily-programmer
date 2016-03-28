@@ -6,12 +6,12 @@
  Feedback is welcome!
  
  ## Challenges
- * [[2016-03-21] Challenge #259 [Easy] Clarence the Slow Typist]("%5B2016-03-21%5D%20Challenge%20%23259%20%5BEasy%5D%20Clarence%20the%20Slow%20Typist")
+ * [[2016-03-21] Challenge #259 [Easy] Clarence the Slow Typist](259%20-%20Clarence%20the%20Slow%20Typist)
  */
 
 //: [Next](@next)
 
-let link = "[2016-03-21] Challenge #259 [Easy] Clarence the Slow Typist"
+let link = "259 - Clarence the Slow Typist"
 
 let result = link.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
 
