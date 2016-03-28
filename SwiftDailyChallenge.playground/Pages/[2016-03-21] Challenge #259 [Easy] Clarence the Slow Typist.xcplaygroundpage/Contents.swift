@@ -1,15 +1,13 @@
-//: [Previous](@previous)
+/*:
+ # [2016-03-21] Challenge #259 [Easy] Clarence the Slow Typist
+ 
+ Published on: 2016-03-21\
+ Difficulty: Easy\
+ [reddit link](https://www.reddit.com/r/dailyprogrammer/comments/4bc3el/20160321_challenge_259_easy_clarence_the_slow/)
+ 
+ */
 
 import Foundation
-
-
-// on reddit: https://www.reddit.com/r/dailyprogrammer/comments/4bc3el/20160321_challenge_259_easy_clarence_the_slow/
-//
-
-
-//
-// My Solution
-//
 
 // Prep work. Lay out the keys visually, and precompute a map from key press to (x,y) coordinate
 let keys = [
@@ -59,4 +57,5 @@ calculateDistance(testNumber) // 27.37825
 
 testMethod(calculateDistance, withInput: testNumber, expectingOutput: 27, toBeWithin: 0.5)
 
-//: [Next](@next)
+
+//: [back to Table of Contents](Table%20of%20Contents)
