@@ -7,9 +7,11 @@
  
  */
 
+
+//: ## Helper methods
 import Foundation
 
-// Prep work. Lay out the keys visually, and precompute a map from key press to (x,y) coordinate
+//Lay out the keys visually, and precompute a map from key press to (x,y) coordinate
 let keys = [
     ["1", "2", "3"],
     ["4", "5", "6"],
@@ -31,7 +33,7 @@ func distanceBetweenPoints(firstPoint: (Int, Int), _ secondPoint: (Int, Int)) ->
     return sqrt(pow(x, 2) + pow(y, 2))
 }
 
-// Actual problem execution
+//: ## Main solution function
 func calculateDistance(ipAddress:String) -> Double {
     let startingValues : (Double, Character?) = (0, nil);
     let (result, _) = ipAddress.characters.reduce(startingValues) { (tupleData, keyPress) -> (Double, Character?) in
@@ -51,9 +53,8 @@ func calculateDistance(ipAddress:String) -> Double {
 }
 
 
-// Test run
+//: ## Test run
 let testNumber = "219.45.143.143"
-calculateDistance(testNumber) // 27.37825
 
 testMethod(calculateDistance, withInput: testNumber, expectingOutput: 27, toBeWithin: 0.5)
 

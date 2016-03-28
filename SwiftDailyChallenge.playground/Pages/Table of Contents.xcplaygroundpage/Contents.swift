@@ -6,12 +6,13 @@
  Feedback is welcome!
  
  ## Challenges
- * [[2016-03-21] Challenge #259 [Easy] Clarence the Slow Typist](259%20-%20Clarence%20the%20Slow%20Typist)
+ * [259 - Clarence the Slow Typist](259%20-%20Clarence%20the%20Slow%20Typist)
+ * [249 - Playing the Stock Market](249%20-%20Playing%20the%20Stock%20Market)
  */
 
 //: [Next](@next)
 
-let link = "259 - Clarence the Slow Typist"
+let link = "249 - Playing the Stock Market"
 
 let result = link.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
 
