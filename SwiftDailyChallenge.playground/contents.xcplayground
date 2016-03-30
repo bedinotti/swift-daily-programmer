@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version='6.0' target-platform='ios' display-mode='rendered'>
+<playground version='6.0' target-platform='ios' display-mode='raw'>
     <pages>
         <page name='Table of Contents'/>
+        <page name='260 - Garage Door Opener'/>
         <page name='259 - Clarence the Slow Typist'/>
         <page name='249 - Playing the Stock Market'/>
         <page name='243 - Jenny&apos;s Fruit Basket'/>
