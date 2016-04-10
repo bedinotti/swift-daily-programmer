@@ -26,16 +26,20 @@ extension MagicSquare : ArrayLiteralConvertible {
     }
     
     init(withArray elements : [Int]) {
+        self.init(withArray: elements.map({ .Some($0) }))
+    }
+    
+    init(withArray elements : [Int?]) {
         // Figure out the size of square
         let actualSize = Int(ceil(sqrt(Double(elements.count))))
         
         // Fill in any remaining squares if we weren't given sufficient information.
         let paddedElements : [Int?]
         if elements.count == actualSize {
-            paddedElements = elements.map { return .Some($0) }
+            paddedElements = elements
         } else {
             // Right now, pad any missing elements with 0's. Might need to make the contents optionals to support later problems
-            paddedElements = elements.map { return .Some($0) } + Array(count: actualSize, repeatedValue: nil)
+            paddedElements = elements + Array(count: actualSize, repeatedValue: nil)
         }
         
         // Build the 2d contents
@@ -150,7 +154,7 @@ extension MagicSquare {
         var newLinearSquare = linearContents
         newLinearSquare.replaceRange(replaceRange, with: possibleLastRow.map({ .Some($0) }))
 
-        let testMagicSquare = MagicSquare(withArray: newLinearSquare.flatMap({ $0 }))
+        let testMagicSquare = MagicSquare(withArray: newLinearSquare)
         return testMagicSquare.isValid()
     }
 }
@@ -194,4 +198,4 @@ func canRepairLastRow(numbers : [Int]) -> Bool {
 testMethod(canRepairLastRow, withInput: validButMissingLastRow, expectingOutput: true)
 testMethod(canRepairLastRow, withInput: invalidMissingLastRow, expectingOutput: false)
 
-//: [back to Table of Contents](Table%20of%20Contents)
+//: [Table of Contents](Table%20of%20Contents)
