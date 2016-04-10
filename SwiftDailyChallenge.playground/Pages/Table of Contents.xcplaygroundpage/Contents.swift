@@ -6,6 +6,7 @@
  Feedback is welcome!
  
  ## Challenges
+ * [261 - Easy - Verify Magic Squares](261%20-%20Easy%20-%20Verify%20Magic%20Squares)
  * [260 - Garage Door Opener](260%20-%20Garage%20Door%20Opener)
  * [259 - Clarence the Slow Typist](259%20-%20Clarence%20the%20Slow%20Typist)
  * [249 - Playing the Stock Market](249%20-%20Playing%20the%20Stock%20Market)
@@ -16,7 +17,7 @@
 
 
 // Helpful code to generate links. 
-let link = "260 - Garage Door Opener"
+let link = "261 - Easy - Verify Magic Squares"
 
 if let result = link.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()) {
     print(result)

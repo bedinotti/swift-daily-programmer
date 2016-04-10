@@ -18,7 +18,13 @@ struct MagicSquare {
 extension MagicSquare : ArrayLiteralConvertible {
     typealias Element = Int
     
+
+    
     init(arrayLiteral elements: Int...) {
+        self.init(withArray: elements)
+    }
+    
+    init(withArray elements : [Int]) {
         // Figure out the size of square
         let actualSize = Int(ceil(sqrt(Double(elements.count))))
         
@@ -76,8 +82,20 @@ extension MagicSquare {
             return columnSum == targetSum
         }
         
+        let uphillSum = (0..<size).reduce(0) { (sumSoFar, index) -> Int in
+            return sumSoFar + twoDimensionalContents[index][index]
+        }
+        let downhillSum = (0..<size).reduce(0) { (sumSoFar, index) -> Int in
+            return sumSoFar + twoDimensionalContents[index][size - index - 1]
+        }
+        let isUphillDiagonalValid = uphillSum == targetSum
+        let isDownhillDiagonalValid = downhillSum == targetSum
         
-        return areAllRowsValid && areAllColumnsValid
+        
+        return areAllRowsValid
+            && areAllColumnsValid
+            && isUphillDiagonalValid
+            && isDownhillDiagonalValid
     }
 }
 
@@ -90,11 +108,13 @@ let trueSquare1 : MagicSquare = [8, 1, 6, 3, 5, 7, 4, 9, 2]
 print(trueSquare1.isValid())
 
 
+//: ## Test run
+//: This method is just needed to adapt the isValid method to something my testing functions can call
 func verify(numbers : [Int]) -> Bool {
-    return false
+    let magicSquare = MagicSquare(withArray: numbers)
+    return magicSquare.isValid()
 }
 
-//: ## Test run
 let trueInput1 = [8, 1, 6, 3, 5, 7, 4, 9, 2]
 let trueInput2 = [2, 7, 6, 9, 5, 1, 4, 3, 8]
 let falseInput1 = [3, 5, 7, 8, 1, 6, 4, 9, 2]
@@ -103,9 +123,9 @@ let falseInput2 = [8, 1, 6, 7, 5, 3, 4, 9, 2]
 
 
 testMethod(verify, withInput: trueInput1, expectingOutput: true)
-testMethod(verify, withInput: trueInput1, expectingOutput: true)
-testMethod(verify, withInput: trueInput1, expectingOutput: false)
-testMethod(verify, withInput: trueInput1, expectingOutput: false)
+testMethod(verify, withInput: trueInput2, expectingOutput: true)
+testMethod(verify, withInput: falseInput1, expectingOutput: false)
+testMethod(verify, withInput: falseInput2, expectingOutput: false)
 
 
 //: [back to Table of Contents](Table%20of%20Contents)
