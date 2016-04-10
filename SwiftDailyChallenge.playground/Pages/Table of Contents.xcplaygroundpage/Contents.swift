@@ -6,14 +6,19 @@
  Feedback is welcome!
  
  ## Challenges
+ * [260 - Garage Door Opener](260%20-%20Garage%20Door%20Opener)
  * [259 - Clarence the Slow Typist](259%20-%20Clarence%20the%20Slow%20Typist)
  * [249 - Playing the Stock Market](249%20-%20Playing%20the%20Stock%20Market)
+ * [243 - Jenny's Fruit Basket](243%20-%20Jenny's%20Fruit%20Basket)
  */
 
 //: [Next](@next)
 
-let link = "249 - Playing the Stock Market"
 
-let result = link.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+// Helpful code to generate links. 
+let link = "260 - Garage Door Opener"
 
-print(result)
+if let result = link.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()) {
+    print(result)
+}
+
