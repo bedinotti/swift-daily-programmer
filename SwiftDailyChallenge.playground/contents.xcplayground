@@ -2,6 +2,7 @@
 <playground version='6.0' target-platform='ios' display-mode='raw'>
     <pages>
         <page name='Table of Contents'/>
+        <page name='261 - Easy - Verify Magic Squares'/>
         <page name='260 - Garage Door Opener'/>
         <page name='259 - Clarence the Slow Typist'/>
         <page name='249 - Playing the Stock Market'/>
