@@ -18,6 +18,7 @@ struct MagicSquare {
     }
 }
 
+// Not really needed to solve the problem, but I wanted to play with ArrayLiteralConvertable
 extension MagicSquare : ArrayLiteralConvertible {
     typealias Element = Int
     
@@ -38,7 +39,6 @@ extension MagicSquare : ArrayLiteralConvertible {
         if elements.count == actualSize {
             paddedElements = elements
         } else {
-            // Right now, pad any missing elements with 0's. Might need to make the contents optionals to support later problems
             paddedElements = elements + Array(count: actualSize, repeatedValue: nil)
         }
         
@@ -56,8 +56,6 @@ extension MagicSquare : ArrayLiteralConvertible {
         linearContents = paddedElements
         self.twoDimensionalContents = twoDimensionalContents
     }
-    
-
 }
 
 // This is the first problem, with the first bonus
@@ -161,10 +159,10 @@ extension MagicSquare {
 
 
 
-// Test it out
+// Manual testing
 let trueSquare1 : MagicSquare = [8, 1, 6, 3, 5, 7, 4, 9, 2]
 
-print(trueSquare1.isValid())
+trueSquare1.isValid()
 
 
 //: ## Test run
