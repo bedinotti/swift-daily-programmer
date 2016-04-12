@@ -4,11 +4,11 @@
 import Foundation
 
 public struct MagicSquare {
-    let size : Int
-    let linearContents : [Int?]
-    let twoDimensionalContents : [[Int?]]
+    public let size : Int
+    public let linearContents : [Int?]
+    public let twoDimensionalContents : [[Int?]]
     
-    var targetSum : Int {
+    public var targetSum : Int {
         return size * (size * size + 1) / 2
     }
 }

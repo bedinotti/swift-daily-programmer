@@ -9,8 +9,20 @@
 import Foundation
 
 extension MagicSquare {
+    private func addRowToSquare(differenceTuple: (Int,Int), chosenRows: [[Int?]], remainingRows:[[Int?]]) -> MagicSquare? {
+        // guard against all our recursive endpoints
+        return nil
+    }
+    
     public func repairRowOrderIfPossible() -> MagicSquare {
-        return self
+        // Functional recursion? Let's try that. Starting state
+        let runningDifference = (uphill: targetSum, downhill: targetSum)
+        let chosenRows : [[Int?]] = []
+        let remainingRows = twoDimensionalContents
+    
+        let foundNewSquare = addRowToSquare(runningDifference, chosenRows: chosenRows, remainingRows: remainingRows)
+        
+        return foundNewSquare ?? self
     }
 }
 
