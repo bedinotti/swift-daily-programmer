@@ -23,16 +23,3 @@ if let result = link.stringByAddingPercentEncodingWithAllowedCharacters(.URLHost
     print(result)
 }
 
-
-
-let x : [Int?] = [1, nil, 2]
-
-x.reduce(true) { (soFar, possibleNil) -> Bool in
-    guard soFar else {
-        return false
-    }
-    return possibleNil != nil
-}
-
-let y = x.flatMap { $0 }
-print(y)
