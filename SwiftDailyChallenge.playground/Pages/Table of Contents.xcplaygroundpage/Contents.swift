@@ -23,3 +23,12 @@ if let result = link.stringByAddingPercentEncodingWithAllowedCharacters(.URLHost
     print(result)
 }
 
+
+
+let x = [1, 2, 3] + [4, 5]
+var y = x
+y.removeAtIndex(3)
+
+x
+y
+

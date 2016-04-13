@@ -151,3 +151,18 @@ extension MagicSquare {
         return testMagicSquare.isValid()
     }
 }
+
+extension MagicSquare : CustomStringConvertible {
+    public var description: String {
+        return twoDimensionalContents.reduce("", combine: { (inputSoFar, newRow) -> String in
+            let newRowString = newRow.reduce("", combine: { (rowSoFar, possibleInt) -> String in
+                var numberString = "x"
+                if let actualInt = possibleInt {
+                    numberString = String(actualInt)
+                }
+                return rowSoFar + " " + numberString
+            })
+            return inputSoFar + "\n" + newRowString
+        })
+    }
+}
