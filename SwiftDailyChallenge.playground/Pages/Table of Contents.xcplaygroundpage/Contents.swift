@@ -6,6 +6,8 @@
  Feedback is welcome!
  
  ## Challenges
+ * [262 - MaybeNumeric](262%20-%20MaybeNumeric)
+ * [261 - Intermediate - Rearranged Magic Squares](261%20-%20Intermediate%20-%20Rearranged%20Magic%20Squares)
  * [261 - Easy - Verify Magic Squares](261%20-%20Easy%20-%20Verify%20Magic%20Squares)
  * [260 - Garage Door Opener](260%20-%20Garage%20Door%20Opener)
  * [259 - Clarence the Slow Typist](259%20-%20Clarence%20the%20Slow%20Typist)
@@ -17,7 +19,7 @@
 
 
 // Helpful code to generate links. 
-let link = "261 - Easy - Verify Magic Squares"
+let link = "262 - MaybeNumeric"
 
 if let result = link.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()) {
     print(result)
