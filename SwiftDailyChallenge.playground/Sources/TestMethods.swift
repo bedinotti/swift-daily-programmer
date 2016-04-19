@@ -32,5 +32,5 @@ public func testMethod<InputType, OutputType : Strideable> (
     let errorStart = actualResult - marginOfError;
     let errorEnd = actualResult + marginOfError;
     
-    return (errorStart...errorEnd).contains(actualResult)
+    return (errorStart...errorEnd).contains(output)
 }

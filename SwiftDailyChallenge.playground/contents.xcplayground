@@ -2,6 +2,7 @@
 <playground version='6.0' target-platform='ios' display-mode='raw'>
     <pages>
         <page name='Table of Contents'/>
+        <page name='263 - Shanon Entropy'/>
         <page name='262 - MaybeNumeric'/>
         <page name='261 - Intermediate - Rearranged Magic Squares'/>
         <page name='261 - Easy - Verify Magic Squares'/>
