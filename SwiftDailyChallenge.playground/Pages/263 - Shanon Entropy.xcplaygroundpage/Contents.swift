@@ -8,26 +8,26 @@
  */
 import Foundation
 
-func entropy(input : String) -> Double {
-    let stringLength = input.characters.count
-    let frequency = input.characters.reduce([:]) { (map, char) -> [Character : Int] in
-        var localMap = map
-        if let existingCount = map[char] {
-            localMap[char] = existingCount + 1
-        } else {
-            localMap[char] = 1
+    func entropy(input : String) -> Double {
+        let stringLength = input.characters.count
+        let frequency = input.characters.reduce([:]) { (map, char) -> [Character : Int] in
+            var localMap = map
+            if let existingCount = map[char] {
+                localMap[char] = existingCount + 1
+            } else {
+                localMap[char] = 1
+            }
+            
+            return localMap
         }
         
-        return localMap
+        return -1 * frequency.reduce(0) { (sum, characterCount) -> Double in
+            let (_, count) = characterCount
+            let fractional = Double(count) / Double(stringLength)
+            let term = fractional * log2(fractional)
+            return sum + term
+        }
     }
-    
-    return -1 * frequency.reduce(0) { (sum, keyValueTuple) -> Double in
-        let (_, count) = keyValueTuple
-        let fractional = Double(count) / Double(stringLength)
-        let term = fractional * log2(fractional)
-        return sum + term
-    }
-}
 
 
 
