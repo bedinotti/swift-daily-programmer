@@ -6,6 +6,7 @@
  Feedback is welcome!
  
  ## Challenges
+ * [267 - Places](267%20-%20Places)
  * [263 - Shanon Entropy](263%20-%20Shanon%20Entropy)
  * [262 - MaybeNumeric](262%20-%20MaybeNumeric)
  * [261 - Intermediate - Rearranged Magic Squares](261%20-%20Intermediate%20-%20Rearranged%20Magic%20Squares)
@@ -20,18 +21,10 @@
 
 
 // Helpful code to generate links. 
-let link = "263 - Shanon Entropy"
+let link = "267 - Places"
 
 if let result = link.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()) {
     print(result)
 }
 
-
-
-let x = [1, 2, 3] + [4, 5]
-var y = x
-y.removeAtIndex(3)
-
-x
-y
 
