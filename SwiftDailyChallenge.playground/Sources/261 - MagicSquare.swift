@@ -22,7 +22,17 @@ extension MagicSquare : ArrayLiteralConvertible {
     }
     
     public init(withArray elements : [Int]) {
+        #if swift(>=3.0)
+        self.init(withArray: elements.map({ .some($0) }))
+        #else
         self.init(withArray: elements.map({ .Some($0) }))
+        #endif
+        
+        #if swift(>=3.0)
+
+        #else
+
+        #endif
     }
     
     public init(withArray elements : [Int?]) {
@@ -34,13 +44,24 @@ extension MagicSquare : ArrayLiteralConvertible {
         if elements.count == actualSize {
             paddedElements = elements
         } else {
-            paddedElements = elements + Array(count: actualSize, repeatedValue: nil)
+            #if swift(>=3.0)
+                paddedElements = elements + Array(repeating: nil, count: actualSize)
+            #else
+                paddedElements = elements + Array(count: actualSize, repeatedValue: nil)
+            #endif
         }
         
         // Build the 2d contents
         var twoDimensionalContents : [[Int?]] = []
         var startingIndex = 0
-        actualSize.stride(through: actualSize * actualSize, by: actualSize).forEach { newIndex in
+        
+        #if swift(>=3.0)
+            let range = stride(from: actualSize, through: actualSize * actualSize, by: actualSize)
+        #else
+            let range = actualSize.stride(through: actualSize * actualSize, by: actualSize)
+        #endif
+        
+        range.forEach { newIndex in
             let subrange = paddedElements[startingIndex..<newIndex]
             twoDimensionalContents.append(Array(subrange))
             startingIndex = newIndex
@@ -134,18 +155,36 @@ extension MagicSquare {
 // This is the first problem with the second bonus
 extension MagicSquare {
     public func canRepairLastRow() -> Bool {
-        let columnSums = Array(count: size, repeatedValue: targetSum)
+        #if swift(>=3.0)
+            let columnSums = Array(repeating: targetSum, count: size)
+        #else
+            let columnSums = Array(count: size, repeatedValue: targetSum)
+        #endif
         
         // Compute last row from columns
         let possibleLastRow = twoDimensionalContents.reduce(columnSums) { (remainingSum, row) -> [Int] in
-            return row.enumerate().map { (index, value) -> Int in
+            #if swift(>=3.0)
+                let enumerated = row.enumerated()
+            #else
+                let enumerated = row.enumerate()
+            #endif
+            
+            return enumerated.map { (index, value) -> Int in
                 return remainingSum[index] - (value ?? 0)
             }
         }
         
-        let replaceRange = (size*size-size)..<(size*size)
+        
         var newLinearSquare = linearContents
-        newLinearSquare.replaceRange(replaceRange, with: possibleLastRow.map({ .Some($0) }))
+        
+        #if swift(>=3.0)
+            let replaceRange = Range(uncheckedBounds: (lower: size*size-size, upper: size*size))
+            newLinearSquare.replaceSubrange(replaceRange, with: possibleLastRow.map({ .some($0) }))
+        #else
+            let replaceRange = (size*size-size)..<(size*size)
+            newLinearSquare.replaceRange(replaceRange, with: possibleLastRow.map({ .Some($0) }))
+        #endif
+
         
         let testMagicSquare = MagicSquare(withArray: newLinearSquare)
         return testMagicSquare.isValid()

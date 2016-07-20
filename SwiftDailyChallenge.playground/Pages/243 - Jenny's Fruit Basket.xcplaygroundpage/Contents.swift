@@ -27,6 +27,13 @@ let inventory = [
 ]
 
 
+#if swift(>=3.0)
+#else
+    func buyMore(remainingCash remainingCash : Int, groceryList: [(name:String, price:Int)], shoppingCart : [String:Int] = [:]) -> [[String:Int]]{
+        return buyMore(remainingCash, groceryList: groceryList, shoppingCart: shoppingCart)
+    }
+#endif
+
 func buyMore(remainingCash : Int, groceryList: [(name:String, price:Int)], shoppingCart : [String:Int] = [:]) -> [[String:Int]]{
     guard remainingCash >= 0 else {
         return []
@@ -44,7 +51,7 @@ func buyMore(remainingCash : Int, groceryList: [(name:String, price:Int)], shopp
         while newCash >= 0 {
             // Do this before modifying the cart or cash so that the first time it recurses, it acts like we didn't by
             // any of `lastFruit`
-            carts += buyMore(newCash, groceryList: shorterGroceryList, shoppingCart: newCart)
+            carts += buyMore(remainingCash: newCash, groceryList: shorterGroceryList, shoppingCart: newCart)
             
             if let purchasedCount = newCart[lastFruit.name] {
                 newCart[lastFruit.name] = purchasedCount + 1
@@ -62,7 +69,7 @@ func buyMore(remainingCash : Int, groceryList: [(name:String, price:Int)], shopp
 
 func spendFiveDollars() -> [String] {
     // Do the actual shopping
-    let carts = buyMore(500, groceryList: inventory)
+    let carts = buyMore(remainingCash: 500, groceryList: inventory)
     
     // Format the output nicely
     let outputStrings = carts.map { (cart : [String: Int]) -> String in
@@ -74,7 +81,11 @@ func spendFiveDollars() -> [String] {
                 quantities.append("\(quantity) \(fruit)")
             }
         }
-        return quantities.joinWithSeparator(", ")
+        #if swift(>=3.0)
+            return quantities.joined(separator: ", ")
+        #else
+            return quantities.joinWithSeparator(", ")
+        #endif
     }
     return outputStrings
 }
