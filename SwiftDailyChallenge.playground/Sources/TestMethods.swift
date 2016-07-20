@@ -1,5 +1,17 @@
 import Foundation
 
+// Swift 2.2 wrappers
+#if swift(>=3.0)
+#else
+    public func testMethod<InputType, OutputType : Equatable> (
+        method method: (InputType) -> OutputType,
+        withInput input: InputType,
+        expectingOutput output: OutputType
+        ) -> Bool {
+        return testMethod(method, withInput:input, expectingOutput: output)
+    }
+#endif
+
 // Use these functions to test your daily problem solutions.
 
 public func testMethod<InputType, OutputType : Equatable> (
