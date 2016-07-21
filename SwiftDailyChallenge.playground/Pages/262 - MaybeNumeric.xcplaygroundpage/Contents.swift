@@ -45,15 +45,9 @@ func parseInput(input: String) -> MaybeNumber {
 }
 
 //: Part 1
-testMethod(parseInput, withInput: "123", expectingOutput: .Number(123))
-testMethod(parseInput, withInput: "44.234", expectingOutput: .Number(44.234))
-testMethod(parseInput, withInput: "0x123N", expectingOutput: .NotNumber("0x123N"))
+testMethod(method: parseInput, withInput: "123", expectingOutput: .Number(123))
+testMethod(method: parseInput, withInput: "44.234", expectingOutput: .Number(44.234))
+testMethod(method: parseInput, withInput: "0x123N", expectingOutput: .NotNumber("0x123N"))
 
 
 //: [Table of Contents](Table%20of%20Contents)
-
-Double("2345.343")
-Double("haha")
-Double("3.23e5")
-Double("1293712938712938172938172391287319237192837329")
-Double(".25")
