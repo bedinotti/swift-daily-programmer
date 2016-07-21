@@ -27,7 +27,11 @@ extension MagicSquare : ArrayLiteralConvertible {
     }
     
     init(withArray elements : [Int]) {
-        self.init(withArray: elements.map({ .Some($0) }))
+        #if swift(>=3.0)
+            self.init(withArray: elements.map({ .some($0) }))
+        #else
+            self.init(withArray: elements.map({ .Some($0) }))
+        #endif
     }
     
     init(withArray elements : [Int?]) {
@@ -39,13 +43,23 @@ extension MagicSquare : ArrayLiteralConvertible {
         if elements.count == actualSize {
             paddedElements = elements
         } else {
-            paddedElements = elements + Array(count: actualSize, repeatedValue: nil)
+            #if swift(>=3.0)
+                paddedElements = elements + Array(repeating: nil, count: actualSize)
+            #else
+                paddedElements = elements + Array(count: actualSize, repeatedValue: nil)
+            #endif
         }
         
         // Build the 2d contents
         var twoDimensionalContents : [[Int?]] = []
         var startingIndex = 0
-        actualSize.stride(through: actualSize * actualSize, by: actualSize).forEach { newIndex in
+        #if swift(>=3.0)
+            let range = stride(from: actualSize, through: actualSize * actualSize, by: actualSize)
+        #else
+            let range = actualSize.stride(through: actualSize * actualSize, by: actualSize)
+        #endif
+        
+        range.forEach { newIndex in
             let subrange = paddedElements[startingIndex..<newIndex]
             twoDimensionalContents.append(Array(subrange))
             startingIndex = newIndex
@@ -139,18 +153,34 @@ extension MagicSquare {
 // This is the first problem with the second bonus
 extension MagicSquare {
     func canRepairLastRow() -> Bool {
-        let columnSums = Array(count: size, repeatedValue: targetSum)
+        #if swift(>=3.0)
+            let columnSums = Array(repeating: targetSum, count: size)
+        #else
+            let columnSums = Array(count: size, repeatedValue: targetSum)
+        #endif
+        
         
         // Compute last row from columns
         let possibleLastRow = twoDimensionalContents.reduce(columnSums) { (remainingSum, row) -> [Int] in
-            return row.enumerate().map { (index, value) -> Int in
+            #if swift(>=3.0)
+                let enumeration = row.enumerated()
+            #else
+                let enumeration = row.enumerate()
+            #endif
+            
+            return enumeration.map { (index, value) -> Int in
                 return remainingSum[index] - (value ?? 0)
             }
         }
         
         let replaceRange = (size*size-size)..<(size*size)
         var newLinearSquare = linearContents
-        newLinearSquare.replaceRange(replaceRange, with: possibleLastRow.map({ .Some($0) }))
+        
+        #if swift(>=3.0)
+            newLinearSquare.replaceSubrange(replaceRange, with: possibleLastRow.map({ .some($0) }))
+        #else
+            newLinearSquare.replaceRange(replaceRange, with: possibleLastRow.map({ .Some($0) }))
+        #endif
 
         let testMagicSquare = MagicSquare(withArray: newLinearSquare)
         return testMagicSquare.isValid()
@@ -178,10 +208,10 @@ let falseInput1 = [3, 5, 7, 8, 1, 6, 4, 9, 2]
 let falseInput2 = [8, 1, 6, 7, 5, 3, 4, 9, 2]
 
 
-testMethod(verify, withInput: trueInput1, expectingOutput: true)
-testMethod(verify, withInput: trueInput2, expectingOutput: true)
-testMethod(verify, withInput: falseInput1, expectingOutput: false)
-testMethod(verify, withInput: falseInput2, expectingOutput: false)
+testMethod(method: verify, withInput: trueInput1, expectingOutput: true)
+testMethod(method: verify, withInput: trueInput2, expectingOutput: true)
+testMethod(method: verify, withInput: falseInput1, expectingOutput: false)
+testMethod(method: verify, withInput: falseInput2, expectingOutput: false)
 
 
 //: Bonus 2
@@ -193,7 +223,7 @@ func canRepairLastRow(numbers : [Int]) -> Bool {
     return magicSquare.canRepairLastRow()
 }
 
-testMethod(canRepairLastRow, withInput: validButMissingLastRow, expectingOutput: true)
-testMethod(canRepairLastRow, withInput: invalidMissingLastRow, expectingOutput: false)
+testMethod(method: canRepairLastRow, withInput: validButMissingLastRow, expectingOutput: true)
+testMethod(method: canRepairLastRow, withInput: invalidMissingLastRow, expectingOutput: false)
 
 //: [Table of Contents](Table%20of%20Contents)
