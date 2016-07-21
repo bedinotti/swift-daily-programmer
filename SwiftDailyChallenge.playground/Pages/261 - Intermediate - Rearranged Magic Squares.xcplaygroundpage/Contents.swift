@@ -9,6 +9,7 @@
 import Foundation
 
 extension MagicSquare {
+
     private func addRowToSquare(differenceTuple: (uphill: Int, downhill: Int), chosenRows: [[Int?]], remainingRows:[[Int?]]) -> MagicSquare? {
         // Base conditions
         guard differenceTuple.uphill >= 0 else {
@@ -28,7 +29,13 @@ extension MagicSquare {
         
         // Recursive conditions
         let size = remainingRows.first!.count
-        for (index, row) in remainingRows.enumerate() {
+        #if swift(>=3.0)
+            let enumerated = remainingRows.enumerated()
+        #else
+            let enumerated = remainingRows.enumerate()
+        #endif
+        
+        for (index, row) in enumerated {
             let diagonalOffset = chosenRows.count
             let uphillNumber = row[size-1 - diagonalOffset] ?? 0
             let downhillNumber = row[diagonalOffset] ?? 0
@@ -40,9 +47,15 @@ extension MagicSquare {
             var newChosenRows = chosenRows
             newChosenRows.append(row)
             var newRemainingRows = remainingRows
-            newRemainingRows.removeAtIndex(index)
             
-            if let foundSquare = addRowToSquare(newDifferenceTuple, chosenRows: newChosenRows, remainingRows: newRemainingRows) {
+            #if swift(>=3.0)
+                newRemainingRows.remove(at: index)
+            #else
+                newRemainingRows.removeAtIndex(index)
+            #endif
+            
+            
+            if let foundSquare = addRowToSquare(differenceTuple: newDifferenceTuple, chosenRows: newChosenRows, remainingRows: newRemainingRows) {
                 // Break the loop and recursion as soon as we find one.
                 return foundSquare
             }
@@ -57,11 +70,21 @@ extension MagicSquare {
         let chosenRows : [[Int?]] = []
         let remainingRows = twoDimensionalContents
     
-        let foundNewSquare = addRowToSquare(runningDifference, chosenRows: chosenRows, remainingRows: remainingRows)
+        let foundNewSquare = addRowToSquare(differenceTuple: runningDifference, chosenRows: chosenRows, remainingRows: remainingRows)
         
         return foundNewSquare ?? self
     }
 }
+
+#if swift(>=3.0)
+    
+#else
+    extension MagicSquare {
+        private func addRowToSquare(differenceTuple differenceTuple: (uphill: Int, downhill: Int), chosenRows: [[Int?]], remainingRows:[[Int?]]) -> MagicSquare? {
+            return addRowToSquare(differenceTuple, chosenRows: chosenRows, remainingRows: remainingRows)
+        }
+    }
+#endif
 
 
 
@@ -81,12 +104,17 @@ func testSquareReordering(square : MagicSquare) -> Bool {
 
 let fourByFour : MagicSquare = [15, 14, 1, 4, 12, 6, 9, 7, 2, 11, 8, 13, 5, 3, 16, 10]
 
-testMethod(testSquareReordering, withInput: fourByFour, expectingOutput: true)
+testMethod(method: testSquareReordering, withInput: fourByFour, expectingOutput: true)
 
 
 // Exhaustive testing with the challenge set
-func toSquare(input : String) -> MagicSquare {
-    let inputArray = input.componentsSeparatedByString(" ").map { Int($0) }
+func toSquare(_ input : String) -> MagicSquare {
+    #if swift(>=3.0)
+        let inputArray = input.components(separatedBy: " ").map { Int($0) }
+    #else
+        let inputArray = input.componentsSeparatedByString(" ").map { Int($0) }
+    #endif
+
     return MagicSquare(withArray: inputArray)
 }
 
@@ -94,7 +122,7 @@ let grid0 = toSquare("20 19 38 30 31 36 64 22 8 16 61 53 1 55 32 34 33 60 25 9 2
 let grid1 = toSquare("63 19 22 37 28 8 47 36 45 23 43 53 11 34 18 33 41 62 46 27 5 24 42 13 32 56 31 12 64 20 6 39 16 60 3 7 17 59 54 44 21 30 14 50 35 2 57 51 4 9 61 25 48 58 26 29 38 1 40 49 52 55 10 15")
 let grid2 = toSquare("23 27 31 42 45 1 32 59 61 33 14 17 60 56 4 15 7 57 37 6 25 18 63 47 40 55 22 20 9 44 46 24 21 10 3 49 62 11 50 54 19 35 36 52 5 43 29 41 51 13 64 16 26 48 34 8 38 30 53 58 28 39 2 12")
 
-testMethod(testSquareReordering, withInput: grid0, expectingOutput: true)
+testMethod(method: testSquareReordering, withInput: grid0, expectingOutput: true)
 // Successful result:
 //    33 60 25  9 26 50 13 44
 //    62 11 54 47 45  7  5 29
@@ -105,7 +133,7 @@ testMethod(testSquareReordering, withInput: grid0, expectingOutput: true)
 //    20 19 38 30 31 36 64 22
 //    58 35  2 48 10 40 46 21
 
-testMethod(testSquareReordering, withInput: grid1, expectingOutput: true)
+testMethod(method: testSquareReordering, withInput: grid1, expectingOutput: true)
 // Successful result:
 //    63 19 22 37 28 8 47 36
 //    4 9 61 25 48 58 26 29
@@ -116,7 +144,7 @@ testMethod(testSquareReordering, withInput: grid1, expectingOutput: true)
 //    45 23 43 53 11 34 18 33
 //    32 56 31 12 64 20 6 39
 
-testMethod(testSquareReordering, withInput: grid2, expectingOutput: true)
+testMethod(method: testSquareReordering, withInput: grid2, expectingOutput: true)
 // Successful result:
 //    7 57 37 6 25 18 63 47
 //    23 27 31 42 45 1 32 59
