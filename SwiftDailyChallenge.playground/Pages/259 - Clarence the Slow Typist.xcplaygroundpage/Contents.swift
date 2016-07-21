@@ -20,11 +20,25 @@ let keys = [
 ]
 var coordinateMap : [Character:(Int,Int)] = [:]
 
-for (rowIndex, row) in keys.enumerate() {
-    for (columnIndex, value) in row.enumerate() {
-        coordinateMap[Character(value)] = (rowIndex, columnIndex)
+#if swift(>=3.0)
+    for (rowIndex, row) in keys.enumerated() {
+        for (columnIndex, value) in row.enumerated() {
+            coordinateMap[Character(value)] = (rowIndex, columnIndex)
+        }
     }
-}
+#else
+    for (rowIndex, row) in keys.enumerate() {
+        for (columnIndex, value) in row.enumerate() {
+            coordinateMap[Character(value)] = (rowIndex, columnIndex)
+        }
+    }
+#endif
+
+#if swift(>=3.0)
+    func distanceBetweenPoints(_ firstPoint: (Int, Int), _ secondPoint: (Int, Int)) -> Double {
+        return distanceBetweenPoints(firstPoint, secondPoint)
+    }
+#endif
 
 // Helper function. z^2 = x^2 + y^2 for distance calculation
 func distanceBetweenPoints(firstPoint: (Int, Int), _ secondPoint: (Int, Int)) -> Double {
@@ -40,8 +54,8 @@ func calculateDistance(ipAddress:String) -> Double {
         var (distance, lastKeypress) = tupleData
         
         if let key = lastKeypress,
-            lastKeyPoint = coordinateMap[key],
-            newKeyPoint = coordinateMap[keyPress] {
+            let lastKeyPoint = coordinateMap[key],
+            let newKeyPoint = coordinateMap[keyPress] {
             
             distance += distanceBetweenPoints(lastKeyPoint, newKeyPoint)
         }
