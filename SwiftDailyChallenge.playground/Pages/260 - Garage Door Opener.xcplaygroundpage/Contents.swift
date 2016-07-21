@@ -79,6 +79,13 @@ func playWithDoor(defaultState : GarageState, inputs: [GarageInputs]) -> [String
     return output;
 }
 
+#if swift(>=3.0)
+#else
+    func playWithDoor(defaultState defaultState : GarageState, inputs: [GarageInputs]) -> [String] {
+        return playWithDoor(defaultState, inputs: inputs)
+    }
+#endif
+
 
 //: Testing
 let simpleInput = [
@@ -115,7 +122,7 @@ let transformedInput = simpleInput.map { input in
     return GarageInputs(rawValue: input)!
 }
 
-let output = playWithDoor(.Closed, inputs: transformedInput)
+let output = playWithDoor(defaultState: .Closed, inputs: transformedInput)
 
 output == expectedOutput
 
